@@ -440,6 +440,7 @@
 				display: flex;
 				gap: 1rem;
 				flex-wrap: wrap;
+				justify-content: center;
 			}
 
 			.btn-primary {
@@ -457,6 +458,10 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				touch-action: manipulation;
+				-webkit-tap-highlight-color: transparent;
+				cursor: pointer;
+				user-select: none;
 			}
 
 			.btn-primary:hover {
@@ -479,6 +484,10 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				touch-action: manipulation;
+				-webkit-tap-highlight-color: transparent;
+				cursor: pointer;
+				user-select: none;
 			}
 
 			.btn-secondary:hover {
@@ -930,11 +939,15 @@
 					gap: 0.75rem;
 				}
 
-				.btn-primary, .btn-secondary {
-					padding: 0.875rem 1.25rem;
-					font-size: 0.95rem;
-					min-height: 44px;
-				}
+							.btn-primary, .btn-secondary {
+				padding: 0.875rem 1.25rem;
+				font-size: 0.95rem;
+				min-height: 44px;
+				touch-action: manipulation;
+				-webkit-tap-highlight-color: transparent;
+				position: relative;
+				z-index: 10;
+			}
 			}
 
 			@media (max-width: 480px) {
@@ -964,7 +977,11 @@
 				.btn-primary, .btn-secondary {
 					padding: 0.75rem 1rem;
 					font-size: 0.9rem;
-					min-height: 40px;
+					min-height: 44px;
+					touch-action: manipulation;
+					-webkit-tap-highlight-color: transparent;
+					position: relative;
+					z-index: 10;
 				}
 			}
 		</style>
