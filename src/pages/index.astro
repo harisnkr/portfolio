@@ -571,7 +571,6 @@
 				flex-direction: column;
 				height: 100%;
 				touch-action: pan-y;
-				-webkit-overflow-scrolling: touch;
 			}
 
 			.visible .project-card {
@@ -606,6 +605,18 @@
 
 			/* Glow effect removed from card - only link interactions */
 
+			/* Disable card interactions on mobile to prevent scroll interference */
+			@media (hover: none) and (pointer: coarse) {
+				.project-card {
+					transform: none !important;
+					pointer-events: none;
+				}
+				
+				.project-link {
+					pointer-events: auto;
+				}
+			}
+
 			.project-meta {
 				display: flex;
 				gap: 1rem;
@@ -613,7 +624,6 @@
 				color: var(--text-muted);
 				margin-bottom: 0.25rem;
 				font-family: 'JetBrains Mono', monospace;
-				touch-action: pan-y;
 			}
 
 			.project-title {
@@ -624,7 +634,6 @@
 				color: var(--text-primary);
 				transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 				position: relative;
-				touch-action: pan-y;
 			}
 
 			/* Title hover effects removed - only link interactions */
@@ -635,7 +644,6 @@
 				line-height: 1.5;
 				font-size: 1rem;
 				flex-grow: 1;
-				touch-action: pan-y;
 				user-select: text;
 			}
 
@@ -662,6 +670,8 @@
 				align-self: flex-start;
 				z-index: 10;
 				width: fit-content;
+				pointer-events: auto;
+				position: relative;
 			}
 
 			.project-link:hover,
@@ -672,6 +682,17 @@
 				background: rgba(137, 180, 250, 0.1);
 				border-color: var(--accent-blue);
 				box-shadow: 0 4px 12px rgba(137, 180, 250, 0.2);
+			}
+
+			/* Disable hover effects on touch devices */
+			@media (hover: none) and (pointer: coarse) {
+				.project-link:hover {
+					color: var(--accent-blue);
+					transform: none;
+					background: rgba(137, 180, 250, 0.05);
+					border-color: transparent;
+					box-shadow: none;
+				}
 			}
 
 			.project-link::after {
@@ -908,26 +929,18 @@
 					min-height: 48px;
 					padding: 1rem 1.25rem;
 					font-size: 1.1rem;
-					background: rgba(137, 180, 250, 0.1);
-					border: 1px solid rgba(137, 180, 250, 0.3);
+					background: rgba(137, 180, 250, 0.15);
+					border: 2px solid rgba(137, 180, 250, 0.4);
+					position: relative;
+					z-index: 20;
+					pointer-events: auto;
 				}
 
-				/* Ensure cards don't interfere with scrolling */
-				.project-card,
-				.project-meta,
-				.project-title,
-				.project-description {
-					touch-action: pan-y;
-					-webkit-user-select: none;
-					user-select: none;
+				/* Cards are now non-interactive, only links work */
+				.project-card {
+					pointer-events: none;
 				}
 
-				.project-description {
-					-webkit-user-select: text;
-					user-select: text;
-				}
-
-				.project-link:hover,
 				.project-link:active,
 				.project-link.touch-active {
 					background: rgba(137, 180, 250, 0.2);
@@ -1015,6 +1028,13 @@
 					padding: 1.25rem 1.5rem;
 					font-size: 1.2rem;
 					background: rgba(137, 180, 250, 0.15);
+				}
+
+				.project-link:active,
+				.project-link.touch-active {
+					background: rgba(137, 180, 250, 0.25);
+					border-color: var(--accent-blue);
+					transform: translateX(1px);
 				}
 			}
 		</style>
@@ -1137,7 +1157,7 @@
 				// Fix project link touch issues on mobile
 				const projectLinks = document.querySelectorAll('.project-link');
 				projectLinks.forEach(link => {
-					// Only handle click events, let touch events pass through for scrolling
+					// Simple click handler for all devices
 					link.addEventListener('click', (e) => {
 						// Add visual feedback
 						link.classList.add('touch-active');
@@ -1147,6 +1167,30 @@
 							link.classList.remove('touch-active');
 						}, 300);
 					});
+
+					// Touch-specific handling for mobile
+					if ('ontouchstart' in window) {
+						let touchStartTime = 0;
+						let touchStartY = 0;
+						
+						link.addEventListener('touchstart', (e) => {
+							touchStartTime = Date.now();
+							touchStartY = e.touches[0].clientY;
+						}, { passive: true });
+						
+						link.addEventListener('touchend', (e) => {
+							const touchEndTime = Date.now();
+							const touchEndY = e.changedTouches[0].clientY;
+							const touchDuration = touchEndTime - touchStartTime;
+							const touchDistance = Math.abs(touchEndY - touchStartY);
+							
+							// If it's a quick tap with minimal movement, treat as click
+							if (touchDuration < 300 && touchDistance < 10) {
+								e.preventDefault();
+								link.click();
+							}
+						}, { passive: false });
+					}
 				});
 
 
@@ -1233,71 +1277,57 @@
 					}, 500);
 				});
 
-				// 3D tilt effect for project cards
-				document.querySelectorAll('.project-card').forEach(card => {
-					card.addEventListener('mousemove', (e) => {
-						const rect = card.getBoundingClientRect();
-						const x = e.clientX - rect.left;
-						const y = e.clientY - rect.top;
+				// 3D tilt effect for project cards (desktop only)
+				if (window.innerWidth > 768) {
+					document.querySelectorAll('.project-card').forEach(card => {
+						card.addEventListener('mousemove', (e) => {
+							const rect = card.getBoundingClientRect();
+							const x = e.clientX - rect.left;
+							const y = e.clientY - rect.top;
+							
+							const centerX = rect.width / 2;
+							const centerY = rect.height / 2;
+							
+							const rotateX = (y - centerY) / 10;
+							const rotateY = (centerX - x) / 10;
+							
+							// Get parallax offset if available
+							const parallaxY = card.dataset.parallaxY || 0;
+							
+							card.style.transform = `
+								translateY(${parallaxY - 8}px) 
+								scale(1.03) 
+								rotateX(${rotateX}deg) 
+								rotateY(${rotateY}deg)
+							`;
+						});
 						
-						const centerX = rect.width / 2;
-						const centerY = rect.height / 2;
-						
-						const rotateX = (y - centerY) / 10;
-						const rotateY = (centerX - x) / 10;
-						
-						// Get parallax offset if available
-						const parallaxY = card.dataset.parallaxY || 0;
-						
-						card.style.transform = `
-							translateY(${parallaxY - 8}px) 
-							scale(1.03) 
-							rotateX(${rotateX}deg) 
-							rotateY(${rotateY}deg)
-						`;
+						card.addEventListener('mouseleave', () => {
+							// Restore parallax position when not hovering
+							const parallaxY = card.dataset.parallaxY || 0;
+							card.style.transform = `translateY(${parallaxY}px) scale(1.01)`;
+						});
 					});
-					
-					card.addEventListener('mouseleave', () => {
-						// Restore parallax position when not hovering
-						const parallaxY = card.dataset.parallaxY || 0;
-						card.style.transform = `translateY(${parallaxY}px) scale(1.01)`;
-					});
+				}
 
-					// Touch interactions for mobile
-					card.addEventListener('touchstart', (e) => {
-						card.classList.add('touch-active');
-						// Prevent default to avoid double-tap zoom
-						e.preventDefault();
-					});
+				// Touch interactions for project links (mobile only)
+				if ('ontouchstart' in window) {
+					document.querySelectorAll('.project-link').forEach(link => {
+						link.addEventListener('touchstart', (e) => {
+							link.classList.add('touch-active');
+						});
 
-					card.addEventListener('touchend', (e) => {
-						// Remove touch-active class after a short delay
-						setTimeout(() => {
-							card.classList.remove('touch-active');
-						}, 300);
-					});
+						link.addEventListener('touchend', (e) => {
+							setTimeout(() => {
+								link.classList.remove('touch-active');
+							}, 300);
+						});
 
-					card.addEventListener('touchcancel', () => {
-						card.classList.remove('touch-active');
-					});
-				});
-
-				// Touch interactions for project links
-				document.querySelectorAll('.project-link').forEach(link => {
-					link.addEventListener('touchstart', (e) => {
-						link.classList.add('touch-active');
-					});
-
-					link.addEventListener('touchend', (e) => {
-						setTimeout(() => {
+						link.addEventListener('touchcancel', () => {
 							link.classList.remove('touch-active');
-						}, 300);
+						});
 					});
-
-					link.addEventListener('touchcancel', () => {
-						link.classList.remove('touch-active');
-					});
-				});
+				}
 
 
 			});
