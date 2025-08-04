@@ -37,7 +37,7 @@
 							</div>
 							<div class="terminal-output">
 								<div class="output-line" id="greeting">Hi, I'm Hari</div>
-								<div class="output-line" id="role">Software Engineer & Family IT Department</div>
+								<div class="output-line" id="role">Software Engineer & 24/7 tech support for friends & family</div>
 								<div class="output-line" id="status">Status: Software Engineer at Grab Singapore</div>
 							</div>
 							<div class="terminal-line">
@@ -52,7 +52,7 @@
 							</div>
 							<div class="terminal-line">
 								<span class="prompt">$</span>
-								<span class="command cursor" id="current-command">ls -la projects/</span>
+								<span class="command cursor" id="projects-command">ls -la projects/ | head</span>
 							</div>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 				</div>
 			</section>
 
-			<section id="work" class="work">
+			<section id="work" class="work hidden-section">
 				<h2 class="section-title">Selected Projects</h2>
 				<div class="projects-grid">
 					<article class="project-card">
@@ -109,11 +109,26 @@
 							View project →
 						</a>
 					</article>
+
+					<article class="project-card">
+						<div class="project-meta">
+							<span class="project-year">2025</span>
+							<span class="project-type">Astro • Portfolio</span>
+						</div>
+						<h3 class="project-title">Portfolio</h3>
+						<p class="project-description">
+							This very website you're looking at. Minimal portfolio built with Astro, 
+							featuring terminal aesthetics and Catppuccin colors.
+						</p>
+						<a href="https://github.com/harisnkr/portfolio" class="project-link" target="_blank">
+							View project →
+						</a>
+					</article>
 				</div>
 			</section>
 
 
-			<section id="contact" class="contact">
+			<section id="contact" class="contact hidden-section">
 				<h2 class="section-title">Let's connect</h2>
 				<div class="contact-content">
 					<p>
@@ -189,11 +204,42 @@
 
 			/* Hero Section */
 			.hero {
-				padding: 3rem 0 5rem;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 2rem 0;
 			}
 
 			.hero-content {
 				max-width: 800px;
+				width: 100%;
+			}
+
+			/* Hidden sections - Apple-style dramatic animations */
+			.hidden-section {
+				opacity: 0;
+				transform: translateY(80px) scale(0.95);
+				filter: blur(4px);
+				transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			.hidden-section.visible {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+				filter: blur(0px);
+			}
+
+			.section-title {
+				opacity: 0;
+				transform: translateY(40px) scale(0.9);
+				transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+				transition-delay: 0.1s;
+			}
+
+			.visible .section-title {
+				opacity: 1;
+				transform: translateY(0) scale(1);
 			}
 
 			/* Terminal Styles */
@@ -370,6 +416,14 @@
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1.5rem;
+				opacity: 0;
+				transform: translateY(40px);
+				transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			.visible .projects-grid {
+				opacity: 1;
+				transform: translateY(0);
 			}
 
 			.project-card {
@@ -378,11 +432,38 @@
 				border-radius: 6px;
 				padding: 1rem;
 				transition: all 0.2s ease;
+				opacity: 0;
+				transform: translateY(60px) scale(0.9);
+				filter: blur(2px);
+				transition: all 1.6s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.project-card:hover {
+			.visible .project-card {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+				filter: blur(0px);
+			}
+
+			/* Staggered animation delays for project cards */
+			.visible .project-card:nth-child(1) {
+				transition-delay: 0.2s;
+			}
+
+			.visible .project-card:nth-child(2) {
+				transition-delay: 0.4s;
+			}
+
+			.visible .project-card:nth-child(3) {
+				transition-delay: 0.6s;
+			}
+
+			.visible .project-card:nth-child(4) {
+				transition-delay: 0.8s;
+			}
+
+			.visible .project-card:hover {
 				border-color: #45475a;
-				transform: translateY(-2px);
+				transform: translateY(-4px) scale(1.02);
 			}
 
 			.project-meta {
@@ -440,6 +521,15 @@
 				color: #bac2de;
 				margin-bottom: 2rem;
 				font-size: 1rem;
+				opacity: 0;
+				transform: translateY(30px);
+				transition: all 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+				transition-delay: 0.15s;
+			}
+
+			.visible .contact-content p {
+				opacity: 1;
+				transform: translateY(0);
 			}
 
 			.contact-icons {
@@ -447,6 +537,15 @@
 				justify-content: center;
 				gap: 2rem;
 				flex-wrap: wrap;
+				opacity: 0;
+				transform: translateY(30px);
+				transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+				transition-delay: 0.2s;
+			}
+
+			.visible .contact-icons {
+				opacity: 1;
+				transform: translateY(0);
 			}
 
 			.contact-icon-wrapper {
@@ -454,6 +553,29 @@
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+				opacity: 0;
+				transform: translateY(40px) scale(0.8);
+				filter: blur(2px);
+				transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			.visible .contact-icon-wrapper {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+				filter: blur(0px);
+			}
+
+			/* Staggered contact icons */
+			.visible .contact-icon-wrapper:nth-child(1) {
+				transition-delay: 0.3s;
+			}
+
+			.visible .contact-icon-wrapper:nth-child(2) {
+				transition-delay: 0.45s;
+			}
+
+			.visible .contact-icon-wrapper:nth-child(3) {
+				transition-delay: 0.6s;
 			}
 
 			.contact-icon {
@@ -550,7 +672,8 @@
 				}
 
 				.hero {
-					padding: 2rem 0 3rem;
+					min-height: 100vh;
+					padding: 2rem 0;
 				}
 
 				.terminal-body {
@@ -651,12 +774,54 @@
 				}, delay);
 			}
 
+			// Apple-style dramatic scroll animations
+			function revealSections() {
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							// Add a small delay for more dramatic effect
+							setTimeout(() => {
+								entry.target.classList.add('visible');
+							}, 150);
+						}
+					});
+				}, {
+					threshold: 0.15,
+					rootMargin: '0px 0px -120px 0px'
+				});
+
+				// Observe hidden sections
+				document.querySelectorAll('.hidden-section').forEach(section => {
+					observer.observe(section);
+				});
+			}
+
+			// Smooth scroll-based trigger with easing
+			function handleScroll() {
+				const heroHeight = document.querySelector('.hero').offsetHeight;
+				const scrollPosition = window.scrollY;
+				const scrollProgress = Math.min(scrollPosition / (heroHeight * 0.6), 1);
+				
+				// Trigger when 60% through hero section
+				if (scrollProgress > 0.6) {
+					document.querySelectorAll('.hidden-section').forEach((section, index) => {
+						setTimeout(() => {
+							section.classList.add('visible');
+						}, index * 100); // Stagger section reveals
+					});
+				}
+			}
+
 			// Start the typing sequence when page loads
 			document.addEventListener('DOMContentLoaded', () => {
 				typeWriter('greeting', 500);
 				typeWriter('role', 1000);
 				typeWriter('status', 1500);
 				typeWriter('description', 2500);
+				
+				// Set up scroll detection
+				revealSections();
+				window.addEventListener('scroll', handleScroll);
 			});
 		</script>
 	</body>
