@@ -5,11 +5,36 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
+		
+		<!-- Standard favicons -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADPklEQVRYCe1WTWgTQRh9M5tNE2Ob1Db+UERBsQgiHhQPKoqCJxE8ehL0IHjwIggePHnwIh4EQQ+CiCAe9OCh4EUQf/AgqIgIIhUVRdSqtkmTNk2y2f0c95tkt8nubmiLeBHmx+zON9+8b96b+XYW+G8xwwC7DwC7AmD7MoAVALIAXADTAD4B6AfwEsATAG/+Fkz2rwDuBnAJwEsAJQBVAGUAVE4fPwI4D2AjgHl/CmQhgJsAigCqrus6juPwPE+7rqtd19GO4+qK42jbcbRt2zUAeQDXALT8CZBmAHcBzBBAxbJqtm1rx3E1AVQZQNWyNEHYtq0BvAGwcz4g6gE8AVCwLKv2J+QEYFuWtm1L27Yd5/d9AKvnCrIEwBMAM6ZpzvR6vXp4eFiPjY3p8fFxPTk5qScmJnS/368HBgb02NiYHh0d1SMjI3poaEgPDg7q/v5+/X54WE9NTWnTNOuBPAKwbC4gbQDuAyiYplkbHBzUExMTH/r6+q5ks9nVPM+vCQaDG8Ph8NZIJLIjFosdTSQSJ5LJ5Nl0On2xq6vrZm9v7/2hoaGPpmkGANwBEP1dkBYA9wDMmKZZ7e/vf5XJZFYpisKxLMszDNPgOE7kOE7ieV7ieT7AcdwCjuOaCILgCSFBQRBkQRAUWZYXhkKh7T09PU8B1AA8ANDyOyAkgHsAZgzDqPb19b3MZDIrKYpiKYpiCYKgSJKkSJKkiqKoyLKsSpKkSKKoiKIo87wgCYIo8IIg8DzPEwRBEARBEgShSVXVbYlE4gWAGoB7/wZCArgLoGgYRrW3t/dFJpNZQQihKIqiKIqmKIpmGIahKIqhKIqlaZpmaJphGJqmaYqiaYqiaIqiaJIkaYIgaJ7nGwVBWBSJRHYkk8nnAKoA7gJo/hUQEsAdAEXDMCrd3d3PMpnMcoqiSIqiKJqmaYZhGJqmGYZhGJqmGZqmGYZhGJqmGYqiaIqiKIqiKJIkaYIgaI7jmkRRXBKNRncmk8lBABUA9Jz4WQSAG/RyGYZR7urqepLNZpfSNE3RNA1N0wzDMAxN0wzDMAxN0wxN0wxFURRJkiRBECRBECTHcQu5/0fEVwC4DuA2/VEA8Pn/B/AFwGcAg/8q4jOAjwA+APgG4COAbwC+A/j0E5DvP+H5CeB7HcQPAAAAAElFTkSuQmCC" />
+		<link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADPklEQVRYCe1WTWgTQRh9M5tNE2Ob1Db+UERBsQgiHhQPKoqCJxE8ehL0IHjwIggePHnwIh4EQQ+CiCAe9OCh4EUQf/AgqIgIIhUVRdSqtkmTNk2y2f0c95tkt8nubmiLeBHmx+zON9+8b96b+XYW+G8xwwC7DwC7AmD7MoAVALIAXADTAD4B6AfwEsATAG/+Fkz2rwDuBnAJwEsAJQBVAGUAVE4fPwI4D2AjgHl/CmQhgJsAigCqrus6juPwPE+7rqtd19GO4+qK42jbcbRt2zUAeQDXALT8CZBmAHcBzBBAxbJqtm1rx3E1AVQZQNWyNEHYtq0BvAGwcz4g6gE8AVCwLKv2J+QEYFuWtm1L27Yd5/d9AKvnCrIEwBMAM6ZpzvR6vXp4eFiPjY3p8fFxPTk5qScmJnS/368HBgb02NiYHh0d1SMjI3poaEgPDg7q/v5+/X54WE9NTWnTNOuBPAKwbC4gbQDuAyiYplkbHBzUExMTH/r6+q5ks9nVPM+vCQaDG8Ph8NZIJLIjFosdTSQSJ5LJ5Nl0On2xq6vrZm9v7/2hoaGPpmkGANwBEP1dkBYA9wDMmKZZ7e/vf5XJZFYpisKxLMszDNPgOE7kOE7ieV7ieT7AcdwCjuOaCILgCSFBQRBkQRAUWZYXhkKh7T09PU8B1AA8ANDyOyAkgHsAZgzDqPb19b3MZDIrKYpiKYpiCYKgSJKkSJKkiqKoyLKsSpKkSKKoiKIo87wgCYIo8IIg8DzPEwRBEARBEgShSVXVbYlE4gWAGoB7/wZCArgLoGgYRrW3t/dFJpNZQQihKIqiKIqmKIpmGIahKIqhKIqlaZpmaJphGJqmaYqiaYqiaIqiaJIkaYIgaJ7nGwVBWBSJRHYkk8nnAKoA7gJo/hUQEsAdAEXDMCrd3d3PMpnMcoqiSIqiKJqmaYZhGJqmGYZhGJqmGZqmGYZhGJqmGYqiaIqiKIqiKJIkaYIgaI7jmkRRXBKNRncmk8lBABUA9Jz4WQSAG/RyGYZR7urqepLNZpfSNE3RNA1N0wzDMAxN0wzDMAxN0wxN0wxFURRJkiRBECRBECTHcQu5/0fEVwC4DuA2/VEA8Pn/B/AFwGcAg/8q4jOAjwA+APgG4COAbwC+A/j0E5DvP+H5CeB7HcQPAAAAAElFTkSuQmCC" />
+		
+		<!-- Safari specific -->
+		<link rel="mask-icon" href="/favicon.svg" color="#1e1e2e" />
+		<link rel="apple-touch-icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADPklEQVRYCe1WTWgTQRh9M5tNE2Ob1Db+UERBsQgiHhQPKoqCJxE8ehL0IHjwIggePHnwIh4EQQ+CiCAe9OCh4EUQf/AgqIgIIhUVRdSqtkmTNk2y2f0c95tkt8nubmiLeBHmx+zON9+8b96b+XYW+G8xwwC7DwC7AmD7MoAVALIAXADTAD4B6AfwEsATAG/+Fkz2rwDuBnAJwEsAJQBVAGUAVE4fPwI4D2AjgHl/CmQhgJsAigCqrus6juPwPE+7rqtd19GO4+qK42jbcbRt2zUAeQDXALT8CZBmAHcBzBBAxbJqtm1rx3E1AVQZQNWyNEHYtq0BvAGwcz4g6gE8AVCwLKv2J+QEYFuWtm1L27Yd5/d9AKvnCrIEwBMAM6ZpzvR6vXp4eFiPjY3p8fFxPTk5qScmJnS/368HBgb02NiYHh0d1SMjI3poaEgPDg7q/v5+/X54WE9NTWnTNOuBPAKwbC4gbQDuAyiYplkbHBzUExMTH/r6+q5ks9nVPM+vCQaDG8Ph8NZIJLIjFosdTSQSJ5LJ5Nl0On2xq6vrZm9v7/2hoaGPpmkGANwBEP1dkBYA9wDMmKZZ7e/vf5XJZFYpisKxLMszDNPgOE7kOE7ieV7ieT7AcdwCjuOaCILgCSFBQRBkQRAUWZYXhkKh7T09PU8B1AA8ANDyOyAkgHsAZgzDqPb19b3MZDIrKYpiKYpiCYKgSJKkSJKkiqKoyLKsSpKkSKKoiKIo87wgCYIo8IIg8DzPEwRBEARBEgShSVXVbYlE4gWAGoB7/wZCArgLoGgYRrW3t/dFJpNZQQihKIqiKIqmKIpmGIahKIqhKIqlaZpmaJphGJqmaYqiaYqiaIqiaJIkaYIgaJ7nGwVBWBSJRHYkk8nnAKoA7gJo/hUQEsAdAEXDMCrd3d3PMpnMcoqiSIqiKJqmaYZhGJqmGYZhGJqmGZqmGYZhGJqmGYqiaIqiKIqiKJIkaYIgaI7jmkRRXBKNRncmk8lBABUA9Jz4WQSAG/RyGYZR7urqepLNZpfSNE3RNA1N0wzDMAxN0wzDMAxN0wxN0wxFURRJkiRBECRBECTHcQu5/0fEVwC4DuA2/VEA8Pn/B/AFwGcAg/8q4jOAjwA+APgG4COAbwC+A/j0E5DvP+H5CeB7HcQPAAAAAElFTkSuQmCC" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="Hari - SWE" />
+		
+		<!-- Microsoft Edge & Windows -->
+		<meta name="msapplication-TileColor" content="#1e1e2e" />
+		<meta name="msapplication-config" content="none" />
+		<meta name="application-name" content="Hari - SWE" />
+		
+		<!-- Open Graph / Social Media -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Hari - SWE" />
+		<meta property="og:description" content="Software Engineer at Grab, Singapore. Building digital experiences, managing homelabs, and architecting cloud solutions." />
+		<meta property="og:image" content="/favicon.svg" />
+		
+		<!-- PWA -->
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)" />
+		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Hari - SWE</title>
 		<meta name="description" content="Software Engineer at Grab, Singapore. Building digital experiences, managing homelabs, and architecting cloud solutions." />
