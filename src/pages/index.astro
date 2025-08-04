@@ -441,6 +441,8 @@
 				gap: 1rem;
 				flex-wrap: wrap;
 				justify-content: center;
+				position: relative;
+				z-index: 20;
 			}
 
 			.btn-primary {
@@ -564,6 +566,7 @@
 				perspective: 1000px;
 				position: relative;
 				cursor: pointer;
+				will-change: transform;
 			}
 
 			.visible .project-card {
@@ -910,6 +913,8 @@
 
 				.project-card {
 					padding: 1.5rem;
+					transform: none !important;
+					will-change: auto;
 				}
 
 				.project-title {
@@ -937,6 +942,8 @@
 				.hero-links {
 					flex-direction: column;
 					gap: 0.75rem;
+					position: relative;
+					z-index: 30;
 				}
 
 							.btn-primary, .btn-secondary {
@@ -1059,23 +1066,47 @@
 						
 						// Only apply parallax when card is in viewport and visible
 						if (rect.top < windowHeight && rect.bottom > 0 && card.classList.contains('visible')) {
-							// Different speed for each card (staggered effect)
-							const speed = 0.05 + (index * 0.02);
+							// Reduced speed for better scrolling experience
+							const speed = 0.02 + (index * 0.005);
 							const yOffset = (scrollY - rect.top) * speed;
 							
 							// Store parallax offset for hover effects
 							card.dataset.parallaxY = yOffset;
 							
-							// Apply subtle parallax (don't override hover transforms)
+							// Apply very subtle parallax (don't override hover transforms)
 							if (!card.matches(':hover')) {
-								card.style.transform = `translateY(${yOffset}px) scale(1.01)`;
+								card.style.transform = `translateY(${yOffset}px) scale(1.005)`;
 							}
 						}
 					});
 				}
 
-				// Add parallax to scroll event
-				window.addEventListener('scroll', handleParallax);
+				// Add parallax to scroll event (disabled on mobile for better scrolling)
+				if (window.innerWidth > 768) {
+					window.addEventListener('scroll', handleParallax);
+				}
+
+				// Fix mobile button click issues
+				const viewProjectsBtn = document.querySelector('a[href="#work"]');
+				if (viewProjectsBtn) {
+					// Handle both click and touch events
+					const handleViewProjects = (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						
+						// Smooth scroll to work section
+						const workSection = document.getElementById('work');
+						if (workSection) {
+							workSection.scrollIntoView({ 
+								behavior: 'smooth',
+								block: 'start'
+							});
+						}
+					};
+					
+					viewProjectsBtn.addEventListener('click', handleViewProjects, { passive: false });
+					viewProjectsBtn.addEventListener('touchend', handleViewProjects, { passive: false });
+				}
 
 
 				
