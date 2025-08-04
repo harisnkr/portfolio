@@ -565,8 +565,11 @@
 				transform-style: preserve-3d;
 				perspective: 1000px;
 				position: relative;
-				cursor: pointer;
+				cursor: default;
 				will-change: transform;
+				display: flex;
+				flex-direction: column;
+				height: 100%;
 			}
 
 			.visible .project-card {
@@ -592,43 +595,14 @@
 				transition-delay: 0.8s;
 			}
 
-			/* Enhanced hover effects */
-			.visible .project-card:hover,
-			.visible .project-card:active,
-			.visible .project-card.touch-active {
-				border-color: var(--accent-blue);
-				transform: translateY(-8px) scale(1.03) rotateX(2deg) rotateY(2deg);
-				box-shadow: 
-					0 20px 40px rgba(137, 180, 250, 0.15),
-					0 8px 16px rgba(0, 0, 0, 0.3),
-					0 0 0 1px rgba(137, 180, 250, 0.2);
-				transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+			/* Enhanced hover effects - only on project link hover */
+			.visible .project-card:hover .project-link,
+			.visible .project-card:active .project-link,
+			.visible .project-card.touch-active .project-link {
+				/* Card hover effects moved to link hover */
 			}
 
-			/* Glow effect on hover */
-			.visible .project-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				border-radius: 6px;
-				background: linear-gradient(45deg, 
-					rgba(137, 180, 250, 0.1), 
-					rgba(203, 166, 247, 0.1), 
-					rgba(166, 227, 161, 0.1));
-				opacity: 0;
-				transition: opacity 0.4s ease;
-				pointer-events: none;
-				z-index: -1;
-			}
-
-			.visible .project-card:hover::before,
-			.visible .project-card:active::before,
-			.visible .project-card.touch-active::before {
-				opacity: 1;
-			}
+			/* Glow effect removed from card - only link interactions */
 
 			.project-meta {
 				display: flex;
@@ -649,21 +623,14 @@
 				position: relative;
 			}
 
-			.visible .project-card:hover .project-title,
-			.visible .project-card:active .project-title,
-			.visible .project-card.touch-active .project-title {
-				background: linear-gradient(45deg, var(--accent-blue), var(--accent-mauve));
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				background-clip: text;
-				transform: translateX(2px);
-			}
+			/* Title hover effects removed - only link interactions */
 
 			.project-description {
 				color: var(--text-secondary);
 				margin-bottom: 1rem;
 				line-height: 1.5;
 				font-size: 1rem;
+				flex-grow: 1;
 			}
 
 			.project-link {
@@ -673,12 +640,20 @@
 				transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 				font-family: 'JetBrains Mono', monospace;
 				font-size: 1rem;
-				padding: 0.5rem 0;
+				padding: 0.75rem 1rem;
 				display: inline-block;
 				min-height: 44px;
 				display: flex;
 				align-items: center;
 				position: relative;
+				border: 1px solid transparent;
+				border-radius: 6px;
+				cursor: pointer;
+				background: rgba(137, 180, 250, 0.05);
+				touch-action: manipulation;
+				-webkit-tap-highlight-color: transparent;
+				margin-top: auto;
+				align-self: flex-start;
 			}
 
 			.project-link:hover,
@@ -686,6 +661,9 @@
 			.project-link.touch-active {
 				color: var(--accent-mauve);
 				transform: translateX(4px);
+				background: rgba(137, 180, 250, 0.1);
+				border-color: var(--accent-blue);
+				box-shadow: 0 4px 12px rgba(137, 180, 250, 0.2);
 			}
 
 			.project-link::after {
@@ -917,6 +895,8 @@
 					will-change: auto;
 				}
 
+				/* No card hover effects on mobile - only link interactions */
+
 				.project-title {
 					font-size: 1.3rem;
 				}
@@ -990,6 +970,8 @@
 					position: relative;
 					z-index: 10;
 				}
+
+				/* No card hover effects on smaller screens - only link interactions */
 			}
 		</style>
 
