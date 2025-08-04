@@ -80,6 +80,21 @@
 					<article class="project-card">
 						<div class="project-meta">
 							<span class="project-year">2025</span>
+							<span class="project-type">Astro • Portfolio</span>
+						</div>
+						<h3 class="project-title">Portfolio</h3>
+						<p class="project-description">
+							This very website you're looking at. Fully vibe coded with cursor ✨. 
+							Minimal portfolio built with Astro, featuring terminal aesthetics and Catppuccin colors.
+						</p>
+						<a href="https://github.com/harisnkr/portfolio" class="project-link" target="_blank">
+							View project →
+						</a>
+					</article>
+
+					<article class="project-card">
+						<div class="project-meta">
+							<span class="project-year">2025</span>
 							<span class="project-type">Flutter • Mobile App</span>
 						</div>
 						<h3 class="project-title">MoneyFly</h3>
@@ -117,21 +132,6 @@
 							SIMConnect, but make it mobile. Flight simulation controls reimagined for mobile platforms.
 						</p>
 						<a href="https://github.com/harisnkr/SIMphony" class="project-link" target="_blank">
-							View project →
-						</a>
-					</article>
-
-					<article class="project-card">
-						<div class="project-meta">
-							<span class="project-year">2025</span>
-							<span class="project-type">Astro • Portfolio</span>
-						</div>
-						<h3 class="project-title">Portfolio</h3>
-						<p class="project-description">
-							This very website you're looking at. Minimal portfolio built with Astro, 
-							featuring terminal aesthetics and Catppuccin colors.
-						</p>
-						<a href="https://github.com/harisnkr/portfolio" class="project-link" target="_blank">
 							View project →
 						</a>
 					</article>
@@ -293,17 +293,20 @@
 				background: var(--bg-secondary);
 				border: 1px solid var(--border-color);
 				border-radius: 8px;
-				margin-bottom: 2.5rem;
+				margin-bottom: 2rem;
 				overflow: hidden;
 				box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
 			}
 
 			.terminal-header {
 				background: var(--bg-tertiary);
-				padding: 0.5rem 1rem;
+				padding: 0.4rem 0.875rem;
 				display: flex;
 				align-items: center;
-				gap: 1rem;
+				gap: 0.75rem;
 			}
 
 			.terminal-buttons {
@@ -323,7 +326,7 @@
 
 			.terminal-title {
 				font-family: 'JetBrains Mono', monospace;
-				font-size: 0.8rem;
+				font-size: 0.75rem;
 				color: var(--text-muted);
 			}
 
@@ -356,14 +359,14 @@
 			}
 
 			.terminal-body {
-				padding: 1rem;
+				padding: 0.875rem;
 				font-family: 'JetBrains Mono', monospace;
-				font-size: 1rem;
-				line-height: 1.5;
+				font-size: 0.9rem;
+				line-height: 1.4;
 			}
 
 			.terminal-line {
-				margin-bottom: 0.5rem;
+				margin-bottom: 0.4rem;
 			}
 
 			.prompt {
@@ -391,7 +394,7 @@
 			}
 
 			.terminal-output {
-				margin: 0.75rem 0 1rem 1.5rem;
+				margin: 0.6rem 0 0.875rem 1.25rem;
 			}
 
 			.output-line {
@@ -578,7 +581,9 @@
 			}
 
 			/* Enhanced hover effects */
-			.visible .project-card:hover {
+			.visible .project-card:hover,
+			.visible .project-card:active,
+			.visible .project-card.touch-active {
 				border-color: var(--accent-blue);
 				transform: translateY(-8px) scale(1.03) rotateX(2deg) rotateY(2deg);
 				box-shadow: 
@@ -607,7 +612,9 @@
 				z-index: -1;
 			}
 
-			.visible .project-card:hover::before {
+			.visible .project-card:hover::before,
+			.visible .project-card:active::before,
+			.visible .project-card.touch-active::before {
 				opacity: 1;
 			}
 
@@ -630,7 +637,9 @@
 				position: relative;
 			}
 
-			.visible .project-card:hover .project-title {
+			.visible .project-card:hover .project-title,
+			.visible .project-card:active .project-title,
+			.visible .project-card.touch-active .project-title {
 				background: linear-gradient(45deg, var(--accent-blue), var(--accent-mauve));
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -660,7 +669,9 @@
 				position: relative;
 			}
 
-			.project-link:hover {
+			.project-link:hover,
+			.project-link:active,
+			.project-link.touch-active {
 				color: var(--accent-mauve);
 				transform: translateX(4px);
 			}
@@ -676,7 +687,9 @@
 				transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.project-link:hover::after {
+			.project-link:hover::after,
+			.project-link:active::after,
+			.project-link.touch-active::after {
 				width: 100%;
 			}
 
@@ -860,12 +873,12 @@
 				}
 
 				.terminal-body {
-					padding: 1.5rem;
-					font-size: 1.1rem;
+					padding: 1.25rem;
+					font-size: 1rem;
 				}
 
 				.terminal-title {
-					font-size: 1rem;
+					font-size: 0.9rem;
 				}
 
 				.work {
@@ -914,13 +927,13 @@
 
 				.hero-links {
 					flex-direction: column;
-					gap: 1rem;
+					gap: 0.75rem;
 				}
 
 				.btn-primary, .btn-secondary {
-					padding: 1.25rem 1.5rem;
-					font-size: 1.1rem;
-					min-height: 50px;
+					padding: 0.875rem 1.25rem;
+					font-size: 0.95rem;
+					min-height: 44px;
 				}
 			}
 
@@ -944,7 +957,15 @@
 					padding: 0.35rem 0.5rem;
 				}
 
+				.hero-links {
+					gap: 0.5rem;
+				}
 
+				.btn-primary, .btn-secondary {
+					padding: 0.75rem 1rem;
+					font-size: 0.9rem;
+					min-height: 40px;
+				}
 			}
 		</style>
 
@@ -1151,6 +1172,41 @@
 						// Restore parallax position when not hovering
 						const parallaxY = card.dataset.parallaxY || 0;
 						card.style.transform = `translateY(${parallaxY}px) scale(1.01)`;
+					});
+
+					// Touch interactions for mobile
+					card.addEventListener('touchstart', (e) => {
+						card.classList.add('touch-active');
+						// Prevent default to avoid double-tap zoom
+						e.preventDefault();
+					});
+
+					card.addEventListener('touchend', (e) => {
+						// Remove touch-active class after a short delay
+						setTimeout(() => {
+							card.classList.remove('touch-active');
+						}, 300);
+					});
+
+					card.addEventListener('touchcancel', () => {
+						card.classList.remove('touch-active');
+					});
+				});
+
+				// Touch interactions for project links
+				document.querySelectorAll('.project-link').forEach(link => {
+					link.addEventListener('touchstart', (e) => {
+						link.classList.add('touch-active');
+					});
+
+					link.addEventListener('touchend', (e) => {
+						setTimeout(() => {
+							link.classList.remove('touch-active');
+						}, 300);
+					});
+
+					link.addEventListener('touchcancel', () => {
+						link.classList.remove('touch-active');
 					});
 				});
 
