@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Basic protection for common paths
+Disallow: /api/
+Disallow: /.env
+Disallow: /config/
+
+# Allow main search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://harisnkr.com/sitemap.xml

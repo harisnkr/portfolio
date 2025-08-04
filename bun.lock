@@ -4,9 +4,9 @@
     "": {
       "name": "portfolio",
       "dependencies": {
-        "astro": "^5.12.8",
-      },
-    },
+        "astro": "^5.12.8"
+      }
+    }
   },
   "packages": {
     "@astrojs/compiler": ["@astrojs/compiler@2.12.2", "", {}, "sha512-w2zfvhjNCkNMmMMOn5b0J8+OmUaBL1o40ipMvqcG6NRpdC+lKxmTi48DT8Xw0SzJ3AfmeFLB45zXZXtmbsjcgw=="],

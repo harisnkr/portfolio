@@ -69,7 +69,7 @@
 					<div class="hero-links">
 						<a href="#work" class="btn-primary">./view_projects.sh</a>
 						<a href="mailto:haria7x@gmail.com" class="btn-secondary">./contact.sh</a>
-						<button id="resume-btn" class="btn-secondary">./get_resume.sh</button>
+						<button id="resume-btn" class="btn-resume">./get_resume.sh</button>
 					</div>
 				</div>
 			</section>
@@ -473,10 +473,11 @@
 			}
 
 			.btn-secondary {
+				background: transparent;
 				color: var(--text-primary);
 				padding: 1rem 1.5rem;
 				text-decoration: none;
-				border: 1px solid var(--border-color);
+				border: 1px solid var(--text-primary);
 				border-radius: 8px;
 				font-weight: 500;
 				transition: all 0.2s ease;
@@ -493,8 +494,36 @@
 			}
 
 			.btn-secondary:hover {
-				border-color: var(--accent-blue);
-				color: var(--accent-blue);
+				background: var(--bg-secondary);
+				border-color: var(--accent-mauve);
+				color: var(--accent-mauve);
+				transform: translateY(-1px);
+			}
+
+			.btn-resume {
+				background: var(--accent-blue);
+				color: var(--bg-primary);
+				padding: 1rem 1.5rem;
+				text-decoration: none;
+				border: 1px solid var(--accent-blue);
+				border-radius: 8px;
+				font-weight: 500;
+				transition: all 0.2s ease;
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 1rem;
+				min-height: 44px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				touch-action: manipulation;
+				-webkit-tap-highlight-color: transparent;
+				cursor: pointer;
+				user-select: none;
+			}
+
+			.btn-resume:hover {
+				background: var(--accent-mauve);
+				border-color: var(--accent-mauve);
 				transform: translateY(-1px);
 			}
 
@@ -977,7 +1006,7 @@
 					z-index: 30;
 				}
 
-							.btn-primary, .btn-secondary {
+							.btn-primary, .btn-secondary, .btn-resume {
 				padding: 0.875rem 1.25rem;
 				font-size: 0.95rem;
 				min-height: 44px;
@@ -1012,7 +1041,7 @@
 					gap: 0.5rem;
 				}
 
-				.btn-primary, .btn-secondary {
+				.btn-primary, .btn-secondary, .btn-resume {
 					padding: 0.75rem 1rem;
 					font-size: 0.9rem;
 					min-height: 44px;
@@ -1221,6 +1250,10 @@
 				const terminalBody = document.querySelector('.terminal-body');
 				
 				resumeBtn.addEventListener('click', () => {
+					// Scroll to top for better UX
+					document.documentElement.scrollTop = 0;
+					document.body.scrollTop = 0;
+					
 					// Clear all terminal content completely
 					const allLines = terminalBody.querySelectorAll('.terminal-line');
 					const allOutputs = terminalBody.querySelectorAll('.terminal-output');
@@ -1245,8 +1278,8 @@
 						const output = document.createElement('div');
 						output.className = 'terminal-output';
 						output.innerHTML = `
-							<div class="output-line" style="color: var(--accent-green); opacity: 0;">Downloading resume...</div>
-							<div class="output-line" style="color: var(--accent-blue); opacity: 0;">Opening Google Drive...</div>
+							<div class="output-line" style="color: var(--accent-blue); opacity: 0;">Redirecting to Google Drive...</div>
+							<div class="output-line" style="color: var(--accent-green); opacity: 0;">Opening resume document...</div>
 						`;
 						terminalBody.appendChild(output);
 						
