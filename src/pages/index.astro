@@ -570,6 +570,8 @@
 				display: flex;
 				flex-direction: column;
 				height: 100%;
+				touch-action: pan-y;
+				-webkit-overflow-scrolling: touch;
 			}
 
 			.visible .project-card {
@@ -611,6 +613,7 @@
 				color: var(--text-muted);
 				margin-bottom: 0.25rem;
 				font-family: 'JetBrains Mono', monospace;
+				touch-action: pan-y;
 			}
 
 			.project-title {
@@ -621,6 +624,7 @@
 				color: var(--text-primary);
 				transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 				position: relative;
+				touch-action: pan-y;
 			}
 
 			/* Title hover effects removed - only link interactions */
@@ -631,6 +635,8 @@
 				line-height: 1.5;
 				font-size: 1rem;
 				flex-grow: 1;
+				touch-action: pan-y;
+				user-select: text;
 			}
 
 			.project-link {
@@ -654,6 +660,8 @@
 				-webkit-tap-highlight-color: transparent;
 				margin-top: auto;
 				align-self: flex-start;
+				z-index: 10;
+				width: fit-content;
 			}
 
 			.project-link:hover,
@@ -895,7 +903,37 @@
 					will-change: auto;
 				}
 
-				/* No card hover effects on mobile - only link interactions */
+				/* Mobile-specific improvements for project links */
+				.project-link {
+					min-height: 48px;
+					padding: 1rem 1.25rem;
+					font-size: 1.1rem;
+					background: rgba(137, 180, 250, 0.1);
+					border: 1px solid rgba(137, 180, 250, 0.3);
+				}
+
+				/* Ensure cards don't interfere with scrolling */
+				.project-card,
+				.project-meta,
+				.project-title,
+				.project-description {
+					touch-action: pan-y;
+					-webkit-user-select: none;
+					user-select: none;
+				}
+
+				.project-description {
+					-webkit-user-select: text;
+					user-select: text;
+				}
+
+				.project-link:hover,
+				.project-link:active,
+				.project-link.touch-active {
+					background: rgba(137, 180, 250, 0.2);
+					border-color: var(--accent-blue);
+					transform: translateX(2px);
+				}
 
 				.project-title {
 					font-size: 1.3rem;
@@ -971,7 +1009,13 @@
 					z-index: 10;
 				}
 
-				/* No card hover effects on smaller screens - only link interactions */
+				/* Further mobile improvements for smaller screens */
+				.project-link {
+					min-height: 52px;
+					padding: 1.25rem 1.5rem;
+					font-size: 1.2rem;
+					background: rgba(137, 180, 250, 0.15);
+				}
 			}
 		</style>
 
@@ -1089,6 +1133,21 @@
 					viewProjectsBtn.addEventListener('click', handleViewProjects, { passive: false });
 					viewProjectsBtn.addEventListener('touchend', handleViewProjects, { passive: false });
 				}
+
+				// Fix project link touch issues on mobile
+				const projectLinks = document.querySelectorAll('.project-link');
+				projectLinks.forEach(link => {
+					// Only handle click events, let touch events pass through for scrolling
+					link.addEventListener('click', (e) => {
+						// Add visual feedback
+						link.classList.add('touch-active');
+						
+						// Remove touch-active class after animation
+						setTimeout(() => {
+							link.classList.remove('touch-active');
+						}, 300);
+					});
+				});
 
 
 				
