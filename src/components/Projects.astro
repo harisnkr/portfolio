@@ -1,69 +1,268 @@
 ---
-// Projects Component
+const projects = [
+	{
+		year: '2025',
+		type: 'Astro • Portfolio',
+		title: 'Portfolio',
+		description: "This very website you're looking at. Fully vibe coded with cursor ✨. Minimal portfolio built with Astro, featuring terminal aesthetics and Catppuccin colors.",
+		link: 'https://github.com/harisnkr/portfolio',
+		linkText: 'View project →',
+		external: true,
+	},
+	{
+		year: '2025',
+		type: 'Flutter • Mobile App',
+		title: 'MoneyFly',
+		description: "Because tracking expenses shouldn't be expensive. Flutter app that turns credit card spending into airline miles—making your money take flight.",
+		link: '#contact',
+		linkText: 'Collaborate →',
+		external: false,
+	},
+	{
+		year: '2025',
+		type: 'Proxmox • Homelab',
+		title: 'Proxmox Paradise',
+		description: 'My personal data center that costs less than a coffee subscription. Self-hosted services including Immich for photo management, automated iCloud backup, Home Assistant for smart home automation, Zigbee2MQTT for IoT device management, and remote-access VPN for secure connectivity.',
+		link: '#contact',
+		linkText: 'Get in touch →',
+		external: false,
+	},
+	{
+		year: '2020',
+		type: 'JavaScript • Mobile',
+		title: 'SIMphony',
+		description: 'SIMConnect, but make it mobile. Flight simulation controls reimagined for mobile platforms.',
+		link: 'https://github.com/harisnkr/SIMphony',
+		linkText: 'View project →',
+		external: true,
+	},
+];
 ---
 
-<section id="work" class="work">
+<section id="work" class="work hidden-section">
 	<h2 class="section-title">Selected Projects</h2>
 	<div class="projects-grid">
-		<article class="project-card">
-			<div class="project-meta">
-				<span class="project-year">2025</span>
-				<span class="project-type">Astro • Portfolio</span>
-			</div>
-			<h3 class="project-title">Portfolio</h3>
-			<p class="project-description">
-				This very website you're looking at. Fully vibe coded with cursor ✨. 
-				Minimal portfolio built with Astro, featuring terminal aesthetics and Catppuccin colors.
-			</p>
-			<a href="https://github.com/harisnkr/portfolio" class="project-link" target="_blank" rel="noopener noreferrer">
-				View project →
-			</a>
-		</article>
-
-		<article class="project-card">
-			<div class="project-meta">
-				<span class="project-year">2025</span>
-				<span class="project-type">Flutter • Mobile App</span>
-			</div>
-			<h3 class="project-title">MoneyFly</h3>
-			<p class="project-description">
-				Because tracking expenses shouldn't be expensive. Flutter app that turns 
-				credit card spending into airline miles—making your money take flight.
-			</p>
-			<a href="#contact" class="project-link">
-				Collaborate →
-			</a>
-		</article>
-
-		<article class="project-card">
-			<div class="project-meta">
-				<span class="project-year">2025</span>
-				<span class="project-type">Proxmox • Homelab</span>
-			</div>
-			<h3 class="project-title">Proxmox Paradise</h3>
-			<p class="project-description">
-				My personal data center that costs less than a coffee subscription. 
-				Self-hosted services including Immich for photo management, automated iCloud backup, 
-				Home Assistant for smart home automation, Zigbee2MQTT for IoT device management, 
-				and remote-access VPN for secure connectivity.
-			</p>
-			<a href="#contact" class="project-link">
-				Get in touch →
-			</a>
-		</article>
-
-		<article class="project-card">
-			<div class="project-meta">
-				<span class="project-year">2020</span>
-				<span class="project-type">JavaScript • Mobile</span>
-			</div>
-			<h3 class="project-title">SIMphony</h3>
-			<p class="project-description">
-				SIMConnect, but make it mobile. Reimagined for mobile platforms.
-			</p>
-			<a href="https://github.com/harisnkr/SIMphony" class="project-link" target="_blank" rel="noopener noreferrer">
-				View project →
-			</a>
-		</article>
+		{projects.map((project) => (
+			<article class="project-card">
+				<div class="project-meta">
+					<span class="project-year">{project.year}</span>
+					<span class="project-type">{project.type}</span>
+				</div>
+				<h3 class="project-title">{project.title}</h3>
+				<p class="project-description">{project.description}</p>
+				<a
+					href={project.link}
+					class="project-link"
+					target={project.external ? '_blank' : undefined}
+				>
+					{project.linkText}
+				</a>
+			</article>
+		))}
 	</div>
 </section>
+
+<style>
+	.work {
+		padding: 3rem 0;
+		border-top: 1px solid var(--border-color);
+	}
+
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		opacity: 0;
+		transform: translateY(40px);
+		transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	:global(.visible) .projects-grid {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.project-card {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 6px;
+		padding: 1rem;
+		opacity: 0;
+		transform: translateY(60px) scale(0.9);
+		filter: blur(2px);
+		transition: all 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+		transform-style: preserve-3d;
+		perspective: 1000px;
+		position: relative;
+		cursor: default;
+		will-change: transform;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		touch-action: pan-y;
+	}
+
+	:global(.visible) .project-card {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0px);
+	}
+
+	:global(.visible) .project-card:nth-child(1) { transition-delay: 0.2s; }
+	:global(.visible) .project-card:nth-child(2) { transition-delay: 0.4s; }
+	:global(.visible) .project-card:nth-child(3) { transition-delay: 0.6s; }
+	:global(.visible) .project-card:nth-child(4) { transition-delay: 0.8s; }
+
+	@media (hover: none) and (pointer: coarse) {
+		.project-card {
+			transform: none !important;
+			pointer-events: none;
+		}
+		.project-link { pointer-events: auto; }
+	}
+
+	.project-meta {
+		display: flex;
+		gap: 1rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		margin-bottom: 0.25rem;
+		font-family: 'JetBrains Mono', monospace;
+	}
+
+	.project-title {
+		font-size: 1.2rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+		letter-spacing: -0.01em;
+		color: var(--text-primary);
+		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		position: relative;
+	}
+
+	.project-description {
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+		line-height: 1.5;
+		font-size: 1rem;
+		flex-grow: 1;
+		user-select: text;
+	}
+
+	.project-link {
+		color: var(--accent-blue);
+		text-decoration: none;
+		font-weight: 500;
+		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 1rem;
+		padding: 0.75rem 1rem;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		position: relative;
+		border: 1px solid transparent;
+		border-radius: 6px;
+		cursor: pointer;
+		background: rgba(137, 180, 250, 0.05);
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		margin-top: auto;
+		align-self: flex-start;
+		z-index: 10;
+		width: fit-content;
+		pointer-events: auto;
+	}
+
+	.project-link:hover,
+	.project-link:active,
+	.project-link:global(.touch-active) {
+		color: var(--accent-mauve);
+		transform: translateX(4px);
+		background: rgba(137, 180, 250, 0.1);
+		border-color: var(--accent-blue);
+		box-shadow: 0 4px 12px rgba(137, 180, 250, 0.2);
+	}
+
+	@media (hover: none) and (pointer: coarse) {
+		.project-link:hover {
+			color: var(--accent-blue);
+			transform: none;
+			background: rgba(137, 180, 250, 0.05);
+			border-color: transparent;
+			box-shadow: none;
+		}
+	}
+
+	.project-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 2px;
+		background: linear-gradient(90deg, var(--accent-blue), var(--accent-mauve));
+		transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.project-link:hover::after,
+	.project-link:active::after,
+	.project-link:global(.touch-active)::after {
+		width: 100%;
+	}
+
+	@media (max-width: 768px) {
+		.work { padding: 2.5rem 0; }
+
+		.projects-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.project-card {
+			padding: 1.5rem;
+			transform: none !important;
+			will-change: auto;
+			pointer-events: none;
+		}
+
+		.project-link {
+			min-height: 48px;
+			padding: 1rem 1.25rem;
+			font-size: 1.1rem;
+			background: rgba(137, 180, 250, 0.15);
+			border: 2px solid rgba(137, 180, 250, 0.4);
+			position: relative;
+			z-index: 20;
+			pointer-events: auto;
+		}
+
+		.project-link:active,
+		.project-link:global(.touch-active) {
+			background: rgba(137, 180, 250, 0.2);
+			border-color: var(--accent-blue);
+			transform: translateX(2px);
+		}
+
+		.project-title { font-size: 1.3rem; }
+		.project-description { font-size: 1.1rem; }
+	}
+
+	@media (max-width: 480px) {
+		.project-card { padding: 1.25rem; }
+
+		.project-link {
+			min-height: 52px;
+			padding: 1.25rem 1.5rem;
+			font-size: 1.2rem;
+			background: rgba(137, 180, 250, 0.15);
+		}
+
+		.project-link:active,
+		.project-link:global(.touch-active) {
+			background: rgba(137, 180, 250, 0.25);
+			border-color: var(--accent-blue);
+			transform: translateX(1px);
+		}
+	}
+</style>

@@ -1,0 +1,211 @@
+---
+const themes = [
+	{ id: 'catppuccin-mocha', label: 'Catppuccin', color: '#cba6f7', scheme: 'dark' },
+	{ id: 'catppuccin-latte', label: 'Catppuccin Latte', color: '#8839ef', scheme: 'light' },
+	{ id: 'nord', label: 'Nord', color: '#88c0d0', scheme: 'dark' },
+	{ id: 'gruvbox', label: 'Gruvbox', color: '#fabd2f', scheme: 'dark' },
+	{ id: 'tokyo-night', label: 'Tokyo Night', color: '#7aa2f7', scheme: 'dark' },
+	{ id: 'rose-pine', label: 'Rosé Pine', color: '#c4a7e7', scheme: 'dark' },
+	{ id: 'dracula', label: 'Dracula', color: '#bd93f9', scheme: 'dark' },
+	{ id: 'solarized', label: 'Solarized', color: '#268bd2', scheme: 'dark' },
+	{ id: 'monokai', label: 'Monokai', color: '#f92672', scheme: 'dark' },
+	{ id: 'one-dark', label: 'One Dark', color: '#61afef', scheme: 'dark' },
+	{ id: 'github-dark', label: 'GitHub Dark', color: '#58a6ff', scheme: 'dark' },
+	{ id: 'github-light', label: 'GitHub Light', color: '#0969da', scheme: 'light' },
+	{ id: 'kanagawa', label: 'Kanagawa', color: '#e6c384', scheme: 'dark' },
+	{ id: 'everforest', label: 'Everforest', color: '#a7c080', scheme: 'dark' },
+	{ id: 'synthwave', label: 'Synthwave', color: '#f97e72', scheme: 'dark' },
+	{ id: 'ayu-mirage', label: 'Ayu Mirage', color: '#73d0ff', scheme: 'dark' },
+	{ id: 'night-owl', label: 'Night Owl', color: '#82aaff', scheme: 'dark' },
+	{ id: 'matrix', label: 'Matrix', color: '#00ff41', scheme: 'dark' },
+];
+---
+
+<div class="theme-selector">
+	<button class="theme-trigger" id="theme-trigger" aria-label="Change color theme">
+		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 2.25A9.75 9.75 0 0 0 2.25 12c0 5.384 4.365 9.75 9.75 9.75 1.034 0 1.875-.84 1.875-1.875 0-.468-.187-.9-.468-1.218a1.232 1.232 0 0 1-.282-.782c0-.69.563-1.25 1.25-1.25H16.5A5.625 5.625 0 0 0 22.125 11c0-4.834-4.5-8.75-10.125-8.75z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+			<circle cx="7.5" cy="12" r="1.25" fill="currentColor"/>
+			<circle cx="10" cy="8" r="1.25" fill="currentColor"/>
+			<circle cx="14" cy="8" r="1.25" fill="currentColor"/>
+			<circle cx="17" cy="12" r="1.25" fill="currentColor"/>
+		</svg>
+	</button>
+	<div class="theme-dropdown" id="theme-dropdown">
+		{themes.map((theme) => (
+			<button
+				class="theme-option"
+				data-theme-id={theme.id}
+				aria-label={`Switch to ${theme.label} theme`}
+			>
+				<span class="theme-swatch" style={`background: ${theme.color}`}></span>
+				<span class="theme-name">{theme.label}</span>
+				{theme.scheme === 'light' && <span class="theme-badge">light</span>}
+			</button>
+		))}
+	</div>
+</div>
+
+<style>
+	.theme-selector {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.theme-trigger {
+		background: none;
+		border: none;
+		color: var(--text-muted);
+		cursor: pointer;
+		padding: 0.35rem;
+		border-radius: 4px;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.theme-trigger:hover {
+		color: var(--accent-blue);
+		background: rgba(137, 180, 250, 0.1);
+	}
+
+	.theme-dropdown {
+		position: absolute;
+		top: calc(100% + 8px);
+		right: 0;
+		background: var(--bg-tertiary);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		padding: 0.375rem;
+		min-width: 180px;
+		max-height: 320px;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--border-color) transparent;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-4px) scale(0.96);
+		transition: all 0.15s ease;
+		z-index: 1000;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+	}
+
+	.theme-dropdown.open {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0) scale(1);
+	}
+
+	.theme-option {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+		padding: 0.4rem 0.5rem;
+		background: none;
+		border: none;
+		border-radius: 5px;
+		color: var(--text-secondary);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.75rem;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		text-align: left;
+	}
+
+	.theme-option:hover {
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+	}
+
+	.theme-option.active {
+		color: var(--accent-blue);
+	}
+
+	.theme-swatch {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		border: 1.5px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.theme-name {
+		flex: 1;
+	}
+
+	.theme-badge {
+		font-size: 0.6rem;
+		color: var(--text-muted);
+		background: var(--bg-primary);
+		padding: 0.1rem 0.35rem;
+		border-radius: 3px;
+		letter-spacing: 0.02em;
+	}
+
+	@media (max-width: 768px) {
+		.theme-trigger {
+			padding: 0.25rem;
+		}
+
+		.theme-trigger svg {
+			width: 12px;
+			height: 12px;
+		}
+
+		.theme-dropdown {
+			min-width: 160px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.theme-trigger {
+			padding: 0.2rem;
+		}
+
+		.theme-trigger svg {
+			width: 10px;
+			height: 10px;
+		}
+	}
+</style>
+
+<script>
+	const trigger = document.getElementById('theme-trigger');
+	const dropdown = document.getElementById('theme-dropdown');
+	const options = dropdown?.querySelectorAll('.theme-option');
+
+	function updateActive() {
+		const current = document.documentElement.getAttribute('data-theme') || 'catppuccin-mocha';
+		options?.forEach(opt => {
+			opt.classList.toggle('active', opt.getAttribute('data-theme-id') === current);
+		});
+	}
+
+	trigger?.addEventListener('click', (e) => {
+		e.stopPropagation();
+		dropdown?.classList.toggle('open');
+		updateActive();
+	});
+
+	options?.forEach(opt => {
+		opt.addEventListener('click', () => {
+			const id = opt.getAttribute('data-theme-id');
+			if (id) {
+				document.documentElement.setAttribute('data-theme', id);
+				localStorage.setItem('theme', id);
+				updateActive();
+			}
+			dropdown?.classList.remove('open');
+		});
+	});
+
+	document.addEventListener('click', () => {
+		dropdown?.classList.remove('open');
+	});
+
+	dropdown?.addEventListener('click', (e) => e.stopPropagation());
+
+	updateActive();
+</script>

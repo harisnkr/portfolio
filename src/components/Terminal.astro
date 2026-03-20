@@ -1,0 +1,539 @@
+---
+import ThemeSelector from './ThemeSelector.astro';
+---
+
+<div class="terminal">
+	<div class="terminal-header">
+		<div class="terminal-buttons">
+			<span class="btn-close"></span>
+			<span class="btn-minimize"></span>
+			<span class="btn-maximize"></span>
+		</div>
+		<div class="terminal-title"></div>
+		<ThemeSelector />
+	</div>
+	<div class="terminal-body" id="terminal-body">
+		<div class="terminal-history" id="terminal-history">
+			<div class="terminal-line">
+				<span class="prompt">$</span>
+				<span class="command">echo $WELCOME_MESSAGE</span>
+			</div>
+			<div class="terminal-output">
+				<div class="output-line" id="greeting">Hi, I'm Hari</div>
+				<div class="output-line" id="role">Software Engineer & 24/7 tech support for friends & family</div>
+				<div class="output-line" id="status">Status: Software Engineer at Grab Singapore</div>
+			</div>
+			<div class="terminal-line">
+				<span class="prompt">$</span>
+				<span class="command">cat ./about.txt</span>
+			</div>
+			<div class="terminal-output">
+				<div class="output-line" id="description">
+					When I'm not deploying to the cloud, I'm deploying to my homelab.<br>
+					Building the boring stuff that makes the exciting stuff possible.
+				</div>
+			</div>
+			<div class="terminal-line" id="initial-terminal-line">
+				<span class="prompt">$</span>
+				<input type="text" class="terminal-input" id="terminal-input" spellcheck="false" autocomplete="off">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Interactive Terminal Prompt -->
+<div class="terminal-prompt" id="terminal-prompt">
+	<div class="prompt-bubble">
+		<div class="prompt-icon">💡</div>
+		<div class="prompt-content">
+			<strong>Try it yourself!</strong>
+			<p>Type <code>clear</code>, or try commands like <code>cal</code>, <code>ls</code>, <code>date</code>, <code>help</code></p>
+		</div>
+		<button class="prompt-close" id="prompt-close">×</button>
+	</div>
+</div>
+
+<!-- Terminal Action Buttons -->
+<div class="terminal-action-buttons">
+	<a href="#work" class="btn-primary">./view_projects.sh</a>
+	<a href="mailto:haria7x@gmail.com" class="btn-secondary">./contact.sh</a>
+	<button id="resume-btn" class="btn-resume">./get_resume.sh</button>
+</div>
+
+<style>
+	/* Terminal Styles */
+	.terminal {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		margin-bottom: 0;
+		overflow: visible;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
+
+	.terminal-action-buttons {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 1.5rem 0;
+		transition: all 0.3s ease;
+	}
+
+	.terminal-header {
+		background: var(--bg-tertiary);
+		padding: 0.5rem 0.875rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 2.5rem;
+	}
+
+	.terminal-header .terminal-buttons {
+		display: flex;
+		gap: 0.5rem;
+		flex-shrink: 0;
+	}
+
+	.terminal-header .terminal-buttons span {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		display: block;
+	}
+
+	.btn-close { background: var(--accent-red); }
+	.btn-minimize { background: var(--accent-yellow); }
+	.btn-maximize { background: var(--accent-green); }
+
+	.terminal-title {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		flex: 1;
+		text-align: center;
+		margin: 0 1rem;
+	}
+
+	.terminal-body {
+		padding: 0.875rem;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.9rem;
+		line-height: 1.4;
+		max-height: 400px;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--border-color) transparent;
+	}
+
+	.terminal-body::-webkit-scrollbar { width: 6px; }
+	.terminal-body::-webkit-scrollbar-track { background: transparent; }
+	.terminal-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+	.terminal-body::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+	.terminal-history { margin-bottom: 0.5rem; }
+
+	.terminal-line {
+		margin-bottom: 0.4rem;
+		display: block;
+		position: relative;
+		line-height: 1.4;
+	}
+
+	.prompt {
+		background: linear-gradient(45deg, var(--accent-blue), var(--accent-mauve));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		font-weight: 500;
+		display: inline;
+	}
+
+	.command {
+		color: var(--accent-green);
+		font-weight: 500;
+	}
+
+	.terminal-output {
+		margin: 0.6rem 0 0.875rem 1.25rem;
+		opacity: 0;
+		animation: fadeIn 0.3s ease-in forwards;
+	}
+
+	@keyframes fadeIn { to { opacity: 1; } }
+
+	.output-line {
+		color: var(--text-primary);
+		margin-bottom: 0.25rem;
+		line-height: 1.4;
+		font-family: 'JetBrains Mono', monospace;
+	}
+
+	.output-line:last-child { margin-bottom: 0; }
+
+	.output-line.visible {
+		opacity: 1;
+		animation: typewriter 0.5s ease-in;
+	}
+
+	@keyframes typewriter {
+		from { opacity: 0; transform: translateX(-10px); }
+		to { opacity: 1; transform: translateX(0); }
+	}
+
+	#greeting.visible {
+		background: linear-gradient(45deg,
+			var(--accent-blue),
+			var(--accent-mauve),
+			var(--accent-green),
+			var(--accent-yellow),
+			var(--accent-red),
+			var(--accent-blue));
+		background-size: 200% 200%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: nameGradient 6s ease-in-out infinite;
+		font-weight: 500;
+	}
+
+	@keyframes nameGradient {
+		0%, 100% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+	}
+
+	#role.visible { color: var(--accent-mauve); }
+	#status.visible { color: var(--accent-green); }
+
+	/* Terminal Input */
+	.terminal-input {
+		background: transparent !important;
+		border: none !important;
+		border-radius: 0 !important;
+		color: var(--accent-green) !important;
+		font-family: 'JetBrains Mono', monospace !important;
+		font-size: 0.9rem !important;
+		font-weight: 500 !important;
+		outline: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		line-height: 1.4 !important;
+		caret-color: var(--text-primary) !important;
+		box-shadow: none !important;
+		-webkit-appearance: none !important;
+		-moz-appearance: none !important;
+		appearance: none !important;
+		resize: none !important;
+		text-decoration: none !important;
+		text-shadow: none !important;
+		-webkit-text-fill-color: var(--accent-green) !important;
+		display: inline !important;
+		width: calc(100% - 2rem) !important;
+		vertical-align: baseline !important;
+	}
+
+	.terminal-input::placeholder,
+	.terminal-input::-webkit-input-placeholder,
+	.terminal-input::-moz-placeholder,
+	.terminal-input:-ms-input-placeholder {
+		color: transparent !important;
+	}
+
+	input.terminal-input,
+	input.terminal-input:focus,
+	input.terminal-input:active,
+	input.terminal-input:hover {
+		border: none !important;
+		outline: none !important;
+		box-shadow: none !important;
+		background: transparent !important;
+		border-radius: 0 !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		color: var(--accent-green) !important;
+		-webkit-text-fill-color: var(--accent-green) !important;
+	}
+
+	input.terminal-input:-webkit-autofill,
+	input.terminal-input:-webkit-autofill:hover,
+	input.terminal-input:-webkit-autofill:focus,
+	input.terminal-input:-webkit-autofill:active {
+		-webkit-box-shadow: 0 0 0 30px var(--bg-secondary) inset !important;
+		-webkit-text-fill-color: var(--accent-green) !important;
+		background: transparent !important;
+		border: none !important;
+		outline: none !important;
+	}
+
+	input.terminal-input::selection {
+		background: rgba(137, 180, 250, 0.2) !important;
+		color: var(--accent-green) !important;
+	}
+
+	.terminal-input:focus-visible {
+		outline: none !important;
+		box-shadow: none !important;
+		border: none !important;
+	}
+
+	.terminal-body *:focus { outline: none !important; }
+
+	/* Terminal Prompt Bubble */
+	.terminal-prompt {
+		position: relative;
+		margin: 0 auto;
+		max-width: 400px;
+		z-index: 100;
+		opacity: 0;
+		visibility: hidden;
+		height: 0;
+		overflow: hidden;
+		transition: all 0.3s ease;
+		pointer-events: none;
+	}
+
+	.terminal-prompt.show {
+		opacity: 1;
+		visibility: visible;
+		height: auto;
+		margin: 2rem auto 1rem;
+		pointer-events: auto;
+	}
+
+	.prompt-bubble {
+		background: var(--bg-tertiary);
+		border: 1px solid var(--border-color);
+		border-radius: 12px;
+		padding: 1.25rem;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+		position: relative;
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+
+	.prompt-icon {
+		font-size: 1.2rem;
+		flex-shrink: 0;
+		margin-top: 0.1rem;
+	}
+
+	.prompt-content { flex: 1; }
+
+	.prompt-content strong {
+		color: var(--accent-blue);
+		font-size: 0.9rem;
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.prompt-content p {
+		color: var(--text-secondary);
+		font-size: 0.85rem;
+		line-height: 1.4;
+		margin: 0;
+	}
+
+	.prompt-content code {
+		background: var(--bg-secondary);
+		color: var(--accent-green);
+		padding: 0.1rem 0.3rem;
+		border-radius: 3px;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8rem;
+	}
+
+	.prompt-close {
+		background: none;
+		border: none;
+		color: var(--text-muted);
+		font-size: 1.2rem;
+		cursor: pointer;
+		padding: 0;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		transition: all 0.2s ease;
+		flex-shrink: 0;
+	}
+
+	.prompt-close:hover {
+		background: var(--bg-secondary);
+		color: var(--accent-red);
+	}
+
+	/* Buttons */
+	.btn-primary {
+		background: var(--accent-green);
+		color: var(--bg-primary);
+		padding: 1rem 1.5rem;
+		text-decoration: none;
+		border-radius: 8px;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		font-family: 'JetBrains Mono', monospace;
+		border: 1px solid var(--accent-green);
+		font-size: 1rem;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-sky);
+		border-color: var(--accent-sky);
+		transform: translateY(-1px);
+	}
+
+	.btn-secondary {
+		background: transparent;
+		color: var(--text-primary);
+		padding: 1rem 1.5rem;
+		text-decoration: none;
+		border: 1px solid var(--text-primary);
+		border-radius: 8px;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 1rem;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.btn-secondary:hover {
+		background: var(--bg-secondary);
+		border-color: var(--accent-mauve);
+		color: var(--accent-mauve);
+		transform: translateY(-1px);
+	}
+
+	.btn-resume {
+		background: var(--accent-blue);
+		color: var(--bg-primary);
+		padding: 1rem 1.5rem;
+		text-decoration: none;
+		border: 1px solid var(--accent-blue);
+		border-radius: 8px;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 1rem;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.btn-resume:hover {
+		background: var(--accent-mauve);
+		border-color: var(--accent-mauve);
+		transform: translateY(-1px);
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.terminal-header {
+			padding: 0.4rem 0.75rem;
+			min-height: 2.25rem;
+		}
+
+		.terminal-header .terminal-buttons span {
+			width: 10px;
+			height: 10px;
+		}
+
+		.terminal-title {
+			font-size: 0.7rem;
+			margin: 0 0.5rem;
+		}
+
+		.terminal-body {
+			padding: 1.25rem;
+			font-size: 1rem;
+		}
+
+		.terminal-action-buttons {
+			flex-direction: column;
+			gap: 0.75rem;
+			padding: 1rem;
+		}
+
+		.terminal-prompt {
+			max-width: 320px;
+		}
+
+		.terminal-prompt.show {
+			margin: 1.5rem auto 1rem;
+		}
+
+		.prompt-bubble { padding: 1rem; }
+		.prompt-content strong { font-size: 0.85rem; }
+		.prompt-content p { font-size: 0.8rem; }
+
+		.btn-primary, .btn-secondary, .btn-resume {
+			padding: 0.875rem 1.25rem;
+			font-size: 0.95rem;
+			min-height: 44px;
+			touch-action: manipulation;
+			-webkit-tap-highlight-color: transparent;
+			position: relative;
+			z-index: 10;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.terminal-header {
+			padding: 0.35rem 0.5rem;
+			min-height: 2rem;
+		}
+
+		.terminal-header .terminal-buttons span {
+			width: 8px;
+			height: 8px;
+		}
+
+		.terminal-header .terminal-buttons { gap: 0.4rem; }
+
+		.terminal-title {
+			font-size: 0.65rem;
+			margin: 0 0.25rem;
+		}
+
+		.terminal-body {
+			font-size: 1rem;
+			padding: 1rem;
+		}
+
+		.btn-primary, .btn-secondary, .btn-resume {
+			padding: 0.75rem 1rem;
+			font-size: 0.9rem;
+			min-height: 44px;
+			touch-action: manipulation;
+			-webkit-tap-highlight-color: transparent;
+			position: relative;
+			z-index: 10;
+		}
+	}
+</style>
