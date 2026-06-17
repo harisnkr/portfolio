@@ -1,6 +1,9 @@
 <footer class="footer">
-	<p>&copy; 2026 Hari.</p>
-	<p class="visits" id="visit-counter" aria-live="polite"></p>
+	<div class="footer-row">
+		<span class="visits" id="visit-counter" aria-live="polite"></span>
+		<span class="sep" id="footer-sep" aria-hidden="true">|</span>
+		<span class="copyright">&copy; 2026 Hari.</span>
+	</div>
 </footer>
 
 <style>
@@ -10,20 +13,29 @@
 		text-align: center;
 	}
 
-	.footer p {
+	.footer-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.footer-row span {
 		color: var(--text-muted);
 		font-size: 0.9rem;
 		font-family: 'JetBrains Mono', monospace;
 	}
 
-	.visits {
-		margin-top: 0.4rem;
+	.visits,
+	.sep {
 		font-size: 0.8rem;
 		opacity: 0;
 		transition: opacity 0.3s ease;
 	}
 
-	.visits.visible {
+	.visits.visible,
+	.sep.visible {
 		opacity: 1;
 	}
 </style>
@@ -31,6 +43,7 @@
 <script>
 	(async () => {
 		const el = document.getElementById('visit-counter');
+		const sep = document.getElementById('footer-sep');
 		if (!el) return;
 		try {
 			const res = await fetch('/api/visits');
@@ -38,6 +51,7 @@
 			if (typeof data.count === 'number') {
 				el.textContent = `visits: ${data.count.toLocaleString()}`;
 				el.classList.add('visible');
+				sep?.classList.add('visible');
 			}
 		} catch {
 			// Silently skip — counter is decorative, not critical.
