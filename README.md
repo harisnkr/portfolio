@@ -1,6 +1,6 @@
 # Portfolio
 
-Minimal portfolio built with Astro and Catppuccin colors.
+Personal portfolio built with Astro, featuring an interactive terminal interface and a configurable multi-theme color system.
 
 ## Setup
 
