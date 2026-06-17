@@ -1,5 +1,6 @@
 <footer class="footer">
 	<p>&copy; 2026 Hari.</p>
+	<p class="visits" id="visit-counter" aria-live="polite"></p>
 </footer>
 
 <style>
@@ -14,4 +15,32 @@
 		font-size: 0.9rem;
 		font-family: 'JetBrains Mono', monospace;
 	}
+
+	.visits {
+		margin-top: 0.4rem;
+		font-size: 0.8rem;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.visits.visible {
+		opacity: 1;
+	}
 </style>
+
+<script>
+	(async () => {
+		const el = document.getElementById('visit-counter');
+		if (!el) return;
+		try {
+			const res = await fetch('/api/visits');
+			const data = await res.json();
+			if (typeof data.count === 'number') {
+				el.textContent = `visits: ${data.count.toLocaleString()}`;
+				el.classList.add('visible');
+			}
+		} catch {
+			// Silently skip — counter is decorative, not critical.
+		}
+	})();
+</script>
