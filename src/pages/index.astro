@@ -220,6 +220,7 @@ import Footer from '../components/Footer.astro';
 						newInput.className = 'terminal-input';
 						newInput.spellcheck = false;
 						newInput.autocomplete = 'off';
+						newInput.setAttribute('aria-label', 'Terminal command input');
 						newInput.style.cssText = `
 							background: transparent !important;
 							border: none !important;
@@ -540,6 +541,7 @@ Pro tip: Use ↑/↓ arrows to navigate command history!`;
 				newInput.className = 'terminal-input';
 				newInput.spellcheck = false;
 				newInput.autocomplete = 'off';
+				newInput.setAttribute('aria-label', 'Terminal command input');
 				newInput.style.cssText = `
 					background: transparent !important;
 					border: none !important;
