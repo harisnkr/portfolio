@@ -1,0 +1,167 @@
+---
+const skillCategories = [
+	{
+		category: 'Languages',
+		skills: ['Go', 'JavaScript/TypeScript', 'Python', 'Dart'],
+	},
+	{
+		category: 'Cloud & Infrastructure',
+		skills: ['AWS', 'Terraform', 'Proxmox', 'TrueNAS', 'Docker', 'Kubernetes'],
+	},
+	{
+		category: 'Platforms & Tools',
+		skills: ['Linux', 'macOS', 'Git', 'PostgreSQL', 'Redis'],
+	},
+];
+---
+
+<section id="skills" class="skills hidden-section">
+	<h2 class="section-title">Tech Stack</h2>
+	<div class="skills-container">
+		<div class="skills-terminal">
+			<div class="terminal-line">
+				<span class="prompt">$</span>
+				<span class="command">cat ./skills.txt</span>
+			</div>
+			<div class="skills-output">
+				{skillCategories.map((group, index) => (
+					<div class="skill-group" style={`animation-delay: ${index * 0.2}s`}>
+						<div class="skill-category">{group.category}:</div>
+						<div class="skills-list">
+							{group.skills.map((skill) => (
+								<span class="skill-badge">{skill}</span>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.skills {
+		padding: 3rem 0;
+		border-top: 1px solid var(--border-color);
+	}
+
+	.skills-container {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.skills-terminal {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		padding: 1.5rem;
+		font-family: 'JetBrains Mono', monospace;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+	}
+
+	.terminal-line {
+		margin-bottom: 1.25rem;
+		display: block;
+		position: relative;
+		line-height: 1.4;
+	}
+
+	.prompt {
+		background: linear-gradient(45deg, var(--accent-blue), var(--accent-mauve));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		font-weight: 500;
+		display: inline;
+	}
+
+	.command {
+		color: var(--accent-green);
+		font-weight: 500;
+	}
+
+	.skills-output {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		opacity: 0;
+		animation: fadeIn 0.5s ease-in forwards;
+	}
+
+	@keyframes fadeIn {
+		to {
+			opacity: 1;
+		}
+	}
+
+	.skill-group {
+		opacity: 0;
+		animation: slideIn 0.6s ease-out forwards;
+	}
+
+	@keyframes slideIn {
+		from {
+			opacity: 0;
+			transform: translateX(-20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	.skill-category {
+		color: var(--accent-blue);
+		font-weight: 500;
+		margin-bottom: 0.75rem;
+		font-size: 0.95rem;
+	}
+
+	.skills-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.skill-badge {
+		background: rgba(137, 180, 250, 0.1);
+		color: var(--accent-green);
+		padding: 0.5rem 0.875rem;
+		border: 1px solid var(--accent-green);
+		border-radius: 4px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.skill-badge:hover {
+		background: rgba(137, 180, 250, 0.2);
+		border-color: var(--accent-blue);
+		color: var(--accent-blue);
+		transform: translateY(-2px);
+	}
+
+	:global(.visible) .skill-group {
+		animation: slideIn 0.6s ease-out forwards;
+	}
+
+	@media (max-width: 768px) {
+		.skills {
+			padding: 2.5rem 0;
+		}
+
+		.skills-terminal {
+			padding: 1.25rem;
+		}
+
+		.skills-list {
+			gap: 0.5rem;
+		}
+
+		.skill-badge {
+			padding: 0.4rem 0.75rem;
+			font-size: 0.85rem;
+		}
+	}
+</style>
